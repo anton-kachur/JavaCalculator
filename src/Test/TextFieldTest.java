@@ -13,7 +13,7 @@ public class TextFieldTest extends JFrame
 
     public TextFieldTest()
     {
-        super("Calculator");
+        super("MainClasses.Calculator");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         // Создание текстовых полей
         calcField = new JTextField(25);

@@ -1,8 +1,13 @@
+package MainClasses;
+
 import java.beans.Expression;
 import java.util.*;
 import java.util.List;
 import static java.lang.Math.*;
 import Jama.Matrix;
+import MethodsWindows.AreaWindow;
+import MethodsWindows.IntegralWindow;
+import MethodsWindows.MatrixWindow;
 
 public class Calculator {
 
@@ -227,14 +232,19 @@ public class Calculator {
             case "e": return E;
             case "equation": return computeEquation();
             case "integral":
-                ClassIntegral integral = new ClassIntegral();
-                return integral.computeIntegral();
+                new IntegralWindow().start();
+                return 1.0;
+                //MainClasses.ClassIntegral integral = new MainClasses.ClassIntegral();
+                //return integral.computeIntegral();
             case "matrix":
-                ClassMatrix matrix = new ClassMatrix();
-                return matrix.computeMatrix(lexemes.next(1).value);
+                new MatrixWindow().start();
+                //ClassMatrix matrix = new ClassMatrix();
+                //return matrix.computeMatrix(lexemes.next(1).value);
             case "area":
-                integral = new ClassIntegral();
-                return integral.computeArea(lexemes.next(1).value);
+                new AreaWindow().start();
+                return 1.0;
+                //integral = new MainClasses.ClassIntegral();
+                //return integral.computeArea(lexemes.next(1).value);
         }
 
         switch(lexeme.type) {
@@ -255,7 +265,7 @@ public class Calculator {
     }
 
 
-    //ToDo Добавить алгоритм парсинга уравнений из ClassIntegral
+    //ToDo Добавить алгоритм парсинга уравнений из MainClasses.ClassIntegral
     public static double computeEquation() {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter size of equation: ");
@@ -274,14 +284,38 @@ public class Calculator {
     }
 
 
+    public double MainFunc(String expression) {
+        //Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        List<Lexeme> lexemes = lexAnalyze(scanner.nextLine());
+        List<Lexeme> lexemes = lexAnalyze(expression);
+
+        //Для консольной версии
+        //List<Lexeme> lexemes = lexAnalyze(scanner.nextLine());
+        System.out.println(lexemes);
+        LexemeBuffer lexemeBuffer = new LexemeBuffer(lexemes);
+
+        //System.out.println(expr(lexemeBuffer) + " ");
+        System.out.println(lexemes);
+        return expr(lexemeBuffer);
+    }
+
+
+    public static void main(String[] args) throws InterruptedException {
+        /*Scanner scanner = new Scanner(System.in);
+
+        CalculatorGUI gui = new CalculatorGUI();
+
+        String expression = gui.inputExpression();
+
+        System.out.println("Expression: "+expression);
+        List<Lexeme> lexemes = lexAnalyze(expression);
+
+        //Для консольной версии
+        //List<Lexeme> lexemes = lexAnalyze(scanner.nextLine());
         System.out.println(lexemes);
         LexemeBuffer lexemeBuffer = new LexemeBuffer(lexemes);
 
         System.out.println(expr(lexemeBuffer) + " ");
-        System.out.println(lexemes);
+        System.out.println(lexemes);*/
     }
 }

@@ -1,3 +1,5 @@
+package MainClasses;
+
 import Jama.Matrix;
 
 import java.util.Scanner;
@@ -11,7 +13,7 @@ public class ClassMatrix {
     private final Scanner in = new Scanner(System.in);
 
 
-    ClassMatrix() { }
+    public ClassMatrix() { }
 
     ClassMatrix(int sizeI, int sizeJ, double[][] coeffArray, double[] row, double[] resArray) {
         this.sizeI = sizeI;
@@ -21,26 +23,26 @@ public class ClassMatrix {
     }
 
 
-    public void createMatrix() {
-        System.out.println("Enter size of matrix (i, j): ");
-        sizeI = in.nextInt();
-        sizeJ = in.nextInt();
+    public void createMatrix(int[] args, double[][] vals, double[] BMatrix) {
+        //System.out.println("Enter size of matrix (i, j): ");
+        sizeI = args[0];
+        sizeJ = args[1];
 
         coeffArray = new double[sizeI][sizeJ];
         row = new double[sizeJ];
         resArray = new double[sizeI];
 
         for (int i = 0; i < sizeI; i++) {
-            System.out.printf("Enter %d row (%d left)\n", (i + 1), (sizeI - i - 1));
+            //System.out.printf("Enter %d row (%d left)\n", (i + 1), (sizeI - i - 1));
             for (int j = 0; j < sizeJ; j++) {
-                System.out.printf("Element %d (%d left): ", (j + 1), (sizeI - j - 1));
-                row[j] = in.nextInt();
+                //System.out.printf("Element %d (%d left): ", (j + 1), (sizeI - j - 1));
+                row[j] = vals[i][j];
             }
             coeffArray[i] = row;
-            System.out.print("Result value: ");
-            resArray[i] = in.nextInt();
+            //System.out.print("Result value: ");
+            resArray[i] = BMatrix[i];
             row = new double[sizeJ];
-            System.out.println("\n");
+            //System.out.println("\n");
         }
     }
 
@@ -54,7 +56,9 @@ public class ClassMatrix {
     }
 
 
-    public double computeMatrix(String operation) {
+    public double computeMatrix(String operation, int[] args, double[][] vals, double[] BMatrix) {
+        createMatrix(args, vals, BMatrix);
+
         if (operation.equals("det"))
             return computeDet();
         else
@@ -64,8 +68,6 @@ public class ClassMatrix {
 
     // ToDo Выяснить, можно ли добавить больше уравнений в систему
     public double computeEquations() {
-        createMatrix();
-
         Matrix A = new Matrix(coeffArray);
         Matrix B = new Matrix(resArray, sizeJ);
         Matrix ans = A.solve(B);
@@ -74,17 +76,13 @@ public class ClassMatrix {
             System.out.printf("x%d = %f\n", i, ans.get(i, 0));
         }
 
-        saveMatrix();
+        //saveMatrix();
         return 1.0;
     }
 
 
     // ToDo Упростить и оформить алгоритм
     public double computeDet() {
-        if (coeffArray == null) {
-            createMatrix();
-        }
-
         double num1, num2, det = 1.0, total = 1.0;
         int index;
         row = new double[sizeI + 1];
@@ -124,7 +122,7 @@ public class ClassMatrix {
                 det = det * coeffArray[i][i];
             }
 
-            saveMatrix();
+            //saveMatrix();
             return (det / total); // Det(kA)/k=Det(A);
         }
 

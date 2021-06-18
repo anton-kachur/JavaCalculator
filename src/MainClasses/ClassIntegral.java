@@ -1,3 +1,7 @@
+package MainClasses;
+
+import MethodsWindows.AreaWindow;
+
 import java.util.Scanner;
 
 import static java.lang.Math.*;
@@ -11,7 +15,7 @@ public class ClassIntegral {
     int pos;
     Scanner in = new Scanner(System.in);
 
-    ClassIntegral() { }
+    public ClassIntegral() { }
 
     ClassIntegral(double a, double b, String function) {
         this.a = a;
@@ -21,11 +25,11 @@ public class ClassIntegral {
 
 
     public void createIntegral() {
-        System.out.println("Enter borders (a, b): ");
+        //System.out.println("Enter borders (a, b): ");
         a = in.nextInt();
         b = in.nextInt();
-        System.out.println("Enter function: ");
-        function = in.next();
+        //System.out.println("Enter function: ");
+        //function = in.next();
         splitFunction = function.split(" ");
     }
 
@@ -76,7 +80,12 @@ public class ClassIntegral {
     }
 
 
-    public double computeIntegral() {
+    public double computeIntegral(String borderA, String borderB, String func) {
+        this.function = func;
+        this.a = Double.parseDouble(borderA);
+        this.b = Double.parseDouble(borderB);
+        this.splitFunction = function.split(" ");
+
         if (function.equals("")) {
             createIntegral();
         }
@@ -84,41 +93,40 @@ public class ClassIntegral {
         double result = 0.0;
 
         while (pos < splitFunction.length) {
-            result += integral(a, b, x -> { return createFunction(x, pos); });
+            result += integral(a, b, x -> createFunction(x, pos));
             pos++;
         }
 
-        saveIntegral();
+        //saveIntegral();
         return result;
     }
 
 
     // ToDo Добавить больше функций
-    public double computeArea(String areaType) {
-        Scanner in = new Scanner(System.in);
+    public double computeArea(String areaType, double[] args) {
+        //Scanner in = new Scanner(System.in);
         switch (areaType) {
             case "square":
-                System.out.println("Enter length of a: ");
-                double l1 = in.nextDouble();
-                return pow(l1, 2);
-            case "rectangle":
-                System.out.println("Enter length of a, b: ");
-                l1 = in.nextDouble();
-                double l2 = in.nextDouble();
-                return l1*l2;
-            case "triangle":
-                System.out.println("Enter length of a, b, c: ");
+                /*System.out.println("Enter length of a, b, c: ");
                 l1 = in.nextDouble();
                 l2 = in.nextDouble();
                 double l3 = in.nextDouble();
-                double p = (l1+l2+l3)/2;
-
-                return sqrt(p * (p - l1) * (p - l2) * (p - l3));
+                */
+                return  pow(args[0], 2);
             case "circle":
-                System.out.println("Enter radius: ");
+                //System.out.println("Enter length of a: ");
+                return PI*pow(args[0], 2);
+            case "rectangle":
+                /*System.out.println("Enter length of a, b: ");
                 l1 = in.nextDouble();
-
-                return PI*pow(l1, 2);
+                double l2 = in.nextDouble();*/
+                return args[0] * args[1];
+            case "triangle":
+                /*System.out.println("Enter radius: ");
+                l1 = in.nextDouble();
+                */
+                double p = (args[0]+args[1]+args[2])/2;
+                return sqrt(p * (p - args[0]) * (p - args[1]) * (p - args[2]));
             //Coming soon...
         }
         return 0;
