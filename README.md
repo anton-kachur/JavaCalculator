@@ -5,6 +5,8 @@ A calculator capable of performing general arithmetic operations on expressions 
 Among basic operations also are: % - remainder division op., ^ - pow op. 
 Also, the functional consists of a numerator of integrals and areas of some figures (square, rectangle, triangle, circle).
 
+## Navigation
+Project now consists of 2 branches - "master" and "CalculatorWithInterface" i.e. console and GUI version of it.
 
 ## How to use it
 1. Download .zip file with Java code and open it in IntellijIdea or some other IDE.
